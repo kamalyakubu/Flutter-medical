@@ -1,15 +1,28 @@
+import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_social_button/flutter_social_button.dart';
+import 'package:intl/intl.dart';
 import 'package:medical/forms/sign_in.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
   SignUp({super.key});
+
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
+
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _countryController = TextEditingController();
-  final TextEditingController _cityController = TextEditingController();
+
   final TextEditingController _emailController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
+
+  final TextEditingController _dateController = TextEditingController();
+
+  String? gender = "male";
 
   @override
   Widget build(BuildContext context) {
@@ -78,22 +91,53 @@ class SignUp extends StatelessWidget {
                 ),
 
 
+                CSCPicker(
+                  layout: Layout.vertical,
+                  onCountryChanged: (value) {
+                    
+                  },
+
+                  onStateChanged: (value) {
+
+                  },
+
+                  onCityChanged: (value) {
+                    
+                  },
+                ),
+
+                const SizedBox(height: 20,),
+
+
                 TextFormField(
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return "Provide Country";
+                      return "Provide Date of Birth";
                     }
                     return null;
                   },
-                  controller: _countryController,
-                  maxLines: 1,
+                  //Get Calender to select birth date
+                  onTap: () async{
+                    DateTime? selectedDate = await showDatePicker(
+                      context: context, 
+                      initialDate: DateTime.now(), 
+                      firstDate: DateTime(1920), 
+                      lastDate: DateTime(2099));
+
+                      if(selectedDate != null){
+                        setState(() {
+                          _dateController.text = DateFormat("dd/MM/yyyy").format(selectedDate);
+                        });
+                      }
+                  },
+                  controller: _dateController,
                   keyboardType: TextInputType.name,
                   style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
-                    labelText: "Country",
+                    labelText: "Date of Birth",
                     labelStyle: const TextStyle(color: Colors.white60),
                     suffixIcon: const Icon(
-                      Icons.location_on,
+                      Icons.calendar_today,
                       color: Colors.white70,
                     ),
                     focusedBorder: OutlineInputBorder(
@@ -113,36 +157,40 @@ class SignUp extends StatelessWidget {
                 ),
 
 
-                TextFormField(
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Provide City";
-                    }
-                    return null;
+                 const Text("What is your gender?", style: TextStyle( 
+                    fontSize: 18
+                ),),
+
+                const Divider(),
+                
+                ListTile(
+                  leading: Radio(
+                  value: "male", 
+                  groupValue: gender, 
+                  onChanged: (value) {
+                    setState(() {
+                      gender = value;
+                    });
                   },
-                  controller: _cityController,
-                  maxLines: 1,
-                  keyboardType: TextInputType.name,
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                    labelText: "Your City",
-                    labelStyle: const TextStyle(color: Colors.white60),
-                    suffixIcon: const Icon(
-                      Icons.location_city,
-                      color: Colors.white70,
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                      borderSide:
-                          const BorderSide(color: Colors.white, width: 2),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                      borderSide:
-                          const BorderSide(color: Colors.white, width: 2),
-                    ),
                   ),
+                  title: Text("Male"),
                 ),
+
+                ListTile(
+                  leading: Radio(
+                  value: "female", 
+                  groupValue: gender, 
+                  onChanged: (value) {
+                    setState(() {
+                      gender = value;
+                    });
+                  },
+                  ),
+                  title: Text("Female"),
+                ),
+
+                
+
                 const SizedBox(
                   height: 20,
                 ),
