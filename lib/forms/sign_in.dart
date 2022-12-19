@@ -131,6 +131,7 @@ class SignIn extends StatelessWidget {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        backgroundColor: Colors.green,
                         duration: Duration(seconds: 3),
                         content: Text("Processing. Please wait"),
                       ));
