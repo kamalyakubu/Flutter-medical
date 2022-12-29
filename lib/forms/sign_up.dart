@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:medical/forms/sign_in.dart';
 
 class SignUp extends StatefulWidget {
-  SignUp({super.key});
+  const SignUp({super.key});
 
   @override
   State<SignUp> createState() => _SignUpState();
@@ -23,6 +23,8 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _dateController = TextEditingController();
 
   String? gender = "male";
+
+  late bool isSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -42,20 +44,39 @@ class _SignUpState extends State<SignUp> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 const SizedBox(
-                  height: 70,
+                  height: 20,
                 ),
                 const Text(
                   "Create Account",
                   style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                      decoration: TextDecoration.underline),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 50,
+                  child: Image.asset(
+                    "assets/images/user_avatar.png",
+                    height: 80,
+                    width: 80,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const Text(
+                  "Profile Pic",
+                  style: TextStyle(
                     color: Colors.white,
-                    fontSize: 20,
-                    decoration: TextDecoration.underline
                   ),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-
                 TextFormField(
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -89,26 +110,15 @@ class _SignUpState extends State<SignUp> {
                 const SizedBox(
                   height: 20,
                 ),
-
-
                 CSCPicker(
                   layout: Layout.vertical,
-                  onCountryChanged: (value) {
-                    
-                  },
-
-                  onStateChanged: (value) {
-
-                  },
-
-                  onCityChanged: (value) {
-                    
-                  },
+                  onCountryChanged: (value) {},
+                  onStateChanged: (value) {},
+                  onCityChanged: (value) {},
                 ),
-
-                const SizedBox(height: 20,),
-
-
+                const SizedBox(
+                  height: 20,
+                ),
                 TextFormField(
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -117,18 +127,19 @@ class _SignUpState extends State<SignUp> {
                     return null;
                   },
                   //Get Calender to select birth date
-                  onTap: () async{
+                  onTap: () async {
                     DateTime? selectedDate = await showDatePicker(
-                      context: context, 
-                      initialDate: DateTime.now(), 
-                      firstDate: DateTime(1920), 
-                      lastDate: DateTime(2099));
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1920),
+                        lastDate: DateTime(2099));
 
-                      if(selectedDate != null){
-                        setState(() {
-                          _dateController.text = DateFormat("dd/MM/yyyy").format(selectedDate);
-                        });
-                      }
+                    if (selectedDate != null) {
+                      setState(() {
+                        _dateController.text =
+                            DateFormat("dd/MM/yyyy").format(selectedDate);
+                      });
+                    }
                   },
                   controller: _dateController,
                   keyboardType: TextInputType.name,
@@ -155,47 +166,61 @@ class _SignUpState extends State<SignUp> {
                 const SizedBox(
                   height: 20,
                 ),
-
-
-                 const Text("What is your gender?", style: TextStyle( 
-                    fontSize: 18
-                ),),
-
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Gender",
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                ),
                 const Divider(),
-                
                 ListTile(
                   leading: Radio(
-                  value: "male", 
-                  groupValue: gender, 
-                  onChanged: (value) {
-                    setState(() {
-                      gender = value;
-                    });
-                  },
+                    fillColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                      return (isSelected) ? Colors.amber : Colors.white;
+                    }),
+                    value: "male",
+                    groupValue: gender,
+                    onChanged: (value) {
+                      setState(() {
+                        gender = value;
+                      });
+                    },
                   ),
-                  title: Text("Male"),
+                  title: const Text(
+                    "Male",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
-
                 ListTile(
                   leading: Radio(
-                  value: "female", 
-                  groupValue: gender, 
-                  onChanged: (value) {
-                    setState(() {
-                      gender = value;
-                    });
-                  },
+                    fillColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                      return (isSelected) ? Colors.amber : Colors.white;
+                    }),
+                    value: "female",
+                    groupValue: gender,
+                    onChanged: (value) {
+                      setState(() {
+                        gender = value;
+                      });
+                    },
                   ),
-                  title: Text("Female"),
+                  title: const Text(
+                    "Female",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
-
-                
-
                 const SizedBox(
                   height: 20,
                 ),
-
-
                 TextFormField(
                   validator: (value) {
                     String exp =
@@ -314,8 +339,9 @@ class _SignUpState extends State<SignUp> {
                         print("Already have account");
                       },
                       child: GestureDetector(
-                        onTap:() {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=> SignIn()));
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => SignIn()));
                         },
                         child: const Text(
                           "Sign In",

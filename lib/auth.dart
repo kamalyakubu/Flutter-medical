@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:medical/forms/sign_in.dart';
+import 'package:medical/forms/sign_up.dart';
 
 class Auth extends StatelessWidget {
   const Auth({super.key});
@@ -51,7 +52,7 @@ class Auth extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) =>  SignIn(),
+                  builder: (context) => SignIn(),
                 ),
               );
             },
@@ -60,20 +61,24 @@ class Auth extends StatelessWidget {
           const SizedBox(height: 20),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 60,
-                  vertical: 10,
-                ),
-                textStyle: const TextStyle(
-                  fontSize: 15,
-                ),
-                backgroundColor: Colors.blue,
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                    side: const BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.circular(100))),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 60,
+                vertical: 10,
+              ),
+              textStyle: const TextStyle(
+                fontSize: 15,
+              ),
+              backgroundColor: Colors.blue,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                side: const BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.circular(100),
+              ),
+            ),
             onPressed: () {
-              print("Sign up");
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => SignUp(),
+              ));
             },
             child: const Text("Sign Up"),
           ),

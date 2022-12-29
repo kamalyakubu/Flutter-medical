@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:medical/auth.dart';
 import 'package:medical/forms/sign_in.dart';
 import 'package:medical/forms/sign_up.dart';
+import 'package:medical/home.dart';
 import 'package:medical/onboarding.dart';
 
 void main() {
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: SignUp(),
+      home: const Home(),
     );
   }
 }
